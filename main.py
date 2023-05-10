@@ -13,7 +13,7 @@ args = parser.parse_args()
 prev_listings = []
 
 # Define the URL and payload
-url = 'https://unisat.io/unisat-market-v2/auction/actions'
+url = 'https://market-api.unisat.io/unisat-market-v2/auction/actions'
 payload = {
     "filter": {"tick": args.ticker},
     "start": 0,
@@ -65,12 +65,17 @@ def send_discord_webhook(listings, event):
 
 # Loop forever
 while True:
-    # Make the request
-    response = requests.post(url, json=payload)
-    
-    # Parse the response
-    data = json.loads(response.text)['data']
-    new_listings = data['list']
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        data = json.loads(response.text)['data']
+        new_listings = data['list']
+    except requests.exceptions.RequestException as e:
+        time.sleep(60)
+        continue
+    except json.JSONDecodeError as e:
+        time.sleep(60)
+        continue
     
     # Check for new listings
     new_sold_listings = []
