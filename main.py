@@ -7,6 +7,7 @@ import argparse
 parser = argparse.ArgumentParser(description='Monitor the Unisat market and send Discord notifications for new listings and sales')
 parser.add_argument('--ticker', type=str, help='the ticker of the token to monitor', required=True)
 parser.add_argument('--discord_webhook', type=str, help='the Discord webhook URL to send notifications to', required=True)
+parser.add_argument('--event', type=str, help='the type of event to send notifications for (sold, listed)', default='both')
 args = parser.parse_args()
 
 # Set up the initial state
@@ -88,9 +89,9 @@ while True:
                 new_listed_listings.append(listing)
     
     # Send the Discord webhooks for new listings
-    if len(new_sold_listings) > 0:
+    if len(new_sold_listings) > 0 and (args.event == 'sold' or args.event == 'both'):
         send_discord_webhook(new_sold_listings, 'Sold')
-    if len(new_listed_listings) > 0:
+    if len(new_listed_listings) > 0 and (args.event == 'listed' or args.event == 'both'):
         send_discord_webhook(new_listed_listings, 'Listed')
     
     # Update the previous listings

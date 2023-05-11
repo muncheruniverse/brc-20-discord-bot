@@ -26,17 +26,18 @@ where `<ticker>` is the BRC20 token symbol to monitor (e.g., `mnch`) and `<disco
 Arguments:
 
 ```
+options:
   -h, --help            show this help message and exit
-  --ticker TICKER, -t TICKER
-                        BRC20 token symbol to monitor (default: mnch)
-  --discord_webhook DISCORD_WEBHOOK, -d DISCORD_WEBHOOK
-                        Discord webhook URL to send messages to
+  --ticker TICKER       the ticker of the token to monitor
+  --discord_webhook DISCORD_WEBHOOK
+                        the Discord webhook URL to send notifications to
+  --event EVENT         the type of event to send notifications for (sold, listed)
 ```
 
 ## Example
 
-To monitor the `mnch` token and send messages to the Discord webhook at `https://discord.com/api/webhooks/1234567890`, run:
+To monitor the `mnch` token, only show sold events, and send messages to the Discord webhook at `https://discord.com/api/webhooks/1234567890`, run:
 
 ```
-python main.py --ticker mnch --discord_webhook https://discord.com/api/webhooks/1234567890
+python main.py --ticker mnch --discord_webhook https://discord.com/api/webhooks/1234567890 --event sold
 ```
