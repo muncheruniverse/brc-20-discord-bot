@@ -6,8 +6,8 @@ A Python script that monitors the [Unisat Market](https://unisat.io/market) for 
 
 This script requires Python 3 and the following Python packages:
 
-- requests
-- argparse
+- `requests`
+- `argparse`
 
 You can install these packages using `pip`. For example:
 
